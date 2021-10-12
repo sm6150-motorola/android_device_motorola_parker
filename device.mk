@@ -49,8 +49,8 @@ PRODUCT_COPY_FILES += \
     prebuilts/vndk/v29/arm64/arch-arm64-armv8-a/shared/vndk-sp/libc++.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libc++.so
 
 # # Fingerprint
-# PRODUCT_PACKAGES += \
-#     vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.parker
+PRODUCT_PACKAGES += \
+    android.hardware.biometrics.fingerprint@2.3-service.parker
 
 # Power
 PRODUCT_COPY_FILES += \

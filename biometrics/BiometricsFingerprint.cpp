@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "FingerprintInscreenService"
+#define LOG_TAG "android.hardware.biometrics.fingerprint@2.3-service.parker"
 
-#include "FingerprintInscreen.h"
+#include "BiometricsFingerprint.h"
 #include <android-base/logging.h>
 #include <hidl/HidlTransportSupport.h>
 #include <fstream>
@@ -30,18 +30,11 @@
 #define NOTIFY_FINGER_DOWN 1536
 #define NOTIFY_FINGER_UP 1537
 
-#define FOD_SENSOR_X 444
-#define FOD_SENSOR_Y 1755
-#define FOD_SENSOR_SIZE 192
-
 #define FOD_UI_PATH "/sys/devices/platform/soc/soc:qcom,dsi-display/fod_ui"
 
-namespace vendor {
-namespace lineage {
 namespace biometrics {
 namespace fingerprint {
-namespace inscreen {
-namespace V1_0 {
+namespace V2_3 {
 namespace implementation {
 
 static bool readBool(int fd) {
@@ -63,7 +56,8 @@ static bool readBool(int fd) {
     return c != '0';
 }
 
-FingerprintInscreen::FingerprintInscreen() {
+BiometricsFingerprint::BiometricsFingerprint() {
+    biometrics_2_1_service = IBiometricsFingerprint_2_1::getService();
     this->mGoodixFpDaemon = IGoodixFingerprintDaemon::getService();
 
     std::thread([this]() {
@@ -92,70 +86,53 @@ FingerprintInscreen::FingerprintInscreen() {
     }).detach();
 }
 
-Return<int32_t> FingerprintInscreen::getPositionX() {
-    return FOD_SENSOR_X;
+Return<uint64_t> BiometricsFingerprint::setNotify(const sp<IBiometricsFingerprintClientCallback>& clientCallback) {
+    return biometrics_2_1_service->setNotify(clientCallback);
 }
 
-Return<int32_t> FingerprintInscreen::getPositionY() {
-    return FOD_SENSOR_Y;
+Return<uint64_t> BiometricsFingerprint::preEnroll() {
+    return biometrics_2_1_service->preEnroll();
 }
 
-Return<int32_t> FingerprintInscreen::getSize() {
-    return FOD_SENSOR_SIZE;
+Return<RequestStatus> BiometricsFingerprint::enroll(const hidl_array<uint8_t, 69>& hat, uint32_t gid, uint32_t timeoutSec) {
+    return biometrics_2_1_service->enroll(hat, gid, timeoutSec);
 }
 
-Return<void> FingerprintInscreen::onStartEnroll() {
-    return Void();
+Return<RequestStatus> BiometricsFingerprint::postEnroll() {
+    return biometrics_2_1_service->postEnroll();
 }
 
-Return<void> FingerprintInscreen::onFinishEnroll() {
-    return Void();
+Return<uint64_t> BiometricsFingerprint::getAuthenticatorId() {
+    return biometrics_2_1_service->getAuthenticatorId();
 }
 
-Return<void> FingerprintInscreen::onPress() {
-    return Void();
+Return<RequestStatus> BiometricsFingerprint::cancel() {
+    return biometrics_2_1_service->cancel();
 }
 
-Return<void> FingerprintInscreen::onRelease() {
-    return Void();
+Return<RequestStatus> BiometricsFingerprint::enumerate() {
+    return biometrics_2_1_service->enumerate();
 }
 
-Return<void> FingerprintInscreen::onShowFODView() {
-    return Void();
+Return<RequestStatus> BiometricsFingerprint::remove(uint32_t gid, uint32_t fid) {
+    return biometrics_2_1_service->remove(gid, fid);
 }
 
-Return<void> FingerprintInscreen::onHideFODView() {
-    return Void();
+Return<RequestStatus> BiometricsFingerprint::setActiveGroup(uint32_t gid, const hidl_string& storePath) {
+    return biometrics_2_1_service->setActiveGroup(gid, storePath);
 }
 
-Return<bool> FingerprintInscreen::handleAcquired(int32_t, int32_t) {
-    return false;
+Return<RequestStatus> BiometricsFingerprint::authenticate(uint64_t operationId, uint32_t gid) {
+    return biometrics_2_1_service->authenticate(operationId, gid);
 }
 
-Return<bool> FingerprintInscreen::handleError(int32_t, int32_t) {
-    return false;
-}
-
-Return<void> FingerprintInscreen::setLongPressEnabled(bool) {
-    return Void();
-}
-
-Return<int32_t> FingerprintInscreen::getDimAmount(int32_t) {
-    return 0;
-}
-
-Return<bool> FingerprintInscreen::shouldBoostBrightness() {
-    return false;
-}
-
-Return<void> FingerprintInscreen::setCallback(const sp<IFingerprintInscreenCallback>&) {
-    return Void();
+Return<bool> BiometricsFingerprint::isUdfps(uint32_t) {
+    return true;
 }
 
 }  // namespace implementation
-}  // namespace V1_0
-}  // namespace inscreen
+}  // namespace V2_3
 }  // namespace fingerprint
 }  // namespace biometrics
-}  // namespace lineage
-}  // namespace vendor
+}  // namespace hardware
+}  // namespace android
