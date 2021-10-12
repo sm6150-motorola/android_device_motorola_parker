@@ -166,6 +166,18 @@
          -->
     <string translatable="false" name="config_mainBuiltInDisplayCutout">M -80,0 L -80,80 L 80,80 L 80,0 Z</string>
 
+    <!-- The properties of a UDFPS sensor in pixels, in the order listed below: -->
+    <integer-array name="config_udfps_sensor_props" translatable="false" >
+     <!--
+       <item>sensorLocationX</item>
+       <item>sensorLocationY</item>
+       <item>sensorRadius</item>
+     -->
+       <item>540</item>
+       <item>1851</item>
+       <item>96</item>
+    </integer-array>
+
     <!-- The bottom margin of the keyguard security container -->
     <dimen name="kg_security_container_min_bottom_margin">650px</dimen>
 </resources>
