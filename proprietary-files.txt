@@ -166,7 +166,7 @@ vendor/firmware/leia_pfp_470.fw
 vendor/firmware/leia_pm4_470.fw
 
 # Goodix - blobs
-vendor/lib64/hw/fingerprint.goodix.so
+vendor/lib64/hw/fingerprint.goodix.so:vendor/lib64/hw/fingerprint.sm6150.so
 vendor/lib64/libgf_hal.so
 vendor/lib64/vendor.goodix.hardware.biometrics.fingerprint@2.1_vendor.so
 vendor/lib64/com.motorola.hardware.display.panel@1.0.so
