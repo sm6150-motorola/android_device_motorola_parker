@@ -22,7 +22,7 @@ DEVICE_PATH := device/motorola/parker
 TARGET_SCREEN_DENSITY := 420
 
 # FOD
-TARGET_SURFACEFLINGER_FOD_LIB := //$(DEVICE_PATH):libfod_extension.parker
+TARGET_SURFACEFLINGER_UDFPS_LIB := //$(DEVICE_PATH):libudfps_extension.moto_parker
 TARGET_USES_FOD_ZPOS := true
 
 # HIDL

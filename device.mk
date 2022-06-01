@@ -51,7 +51,7 @@ PRODUCT_COPY_FILES += \
 
 # Fingerprint
 PRODUCT_PACKAGES += \
-    vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.parker
+    android.hardware.biometrics.fingerprint@2.3-service.moto_parker
 
 # Power
 PRODUCT_COPY_FILES += \
