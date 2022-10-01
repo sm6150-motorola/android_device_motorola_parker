@@ -41,7 +41,7 @@ TARGET_SCREEN_WIDTH := 1080
 # Build info
 BUILD_FINGERPRINT := "motorola/parker_retail/parker:10/QPH30.29-Q3-28-13-10/d623:user/release-keys"
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRODUCT_NAME=parker_retail \
+    TARGET_PRODUCT=parker_retail \
     PRIVATE_BUILD_DESC="parker_retail-user 10 QPH30.29-Q3-28-13-10 d623 release-keys"
 
 PRODUCT_GMS_CLIENTID_BASE := android-motorola
